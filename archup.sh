@@ -114,8 +114,7 @@ pkgs() {
 		zsh sudo \
 		alsa-utils pulseaudio pulseaudio-alsa pavucontrol \
 		aspell aspell-en hunspell hunspell-en_US \
-		go go-tools \
-		rustup \
+		nodejs npm rustup go go-tools \
 		iputils inetutils whois bind-tools dhcpcd \
 		cups \
 		shellcheck \
@@ -190,10 +189,11 @@ yayxpkgs() {
 }
 
 userinit() {
-	useradd -m -G wheel mapkts
+	read -r -p "Enter username (default: mapkts): " $uname
+	useradd -m -G wheel "$uname"
 	
 	echo "set user password"
-	passwd mapkts
+	passwd "$uname"
 
 	echo "make sure '%wheel ALL=(ALL) ALL' is in sudoers"
 	sleep 3
@@ -274,6 +274,13 @@ clashproxy() {
 	sudo systemctl daemon-reload
 	sudo systemctl enable --now "clash@$uname"
 	systemctl status "clash@$uname"
+}
+
+rustup() {
+    rustup toolchain install nightly
+    rustup toolchain install stable
+    
+    yay -Sy rust-analyzer-git
 }
 
 echo ""
