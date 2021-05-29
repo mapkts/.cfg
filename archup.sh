@@ -324,19 +324,26 @@ configs() {
         git clone https://github.com/mapkts/.cfg.git
     fi
 
+    if [ -f ~/archup.sh ]; then
+        echo "local archup.sh deteced, backing up.."
+        mv -f ~/archup.sh ~/.cfg/backups/archup.sh
+    fi
+    echo "Linking archup.sh.."
+    ln -f ~/.cfg/archup.sh ~/archup.sh
+
     if [ -f ~/.config/nvim/coc-settings.json ]; then
         echo "local coc-settings.json deteced, backing up.."
         mv -f ~/.config/nvim/coc-settings.json ~/.cfg/backups/coc-settings.json
     fi
     echo "Linking coc-settings.json.."
-    ln -sf ~/.cfg/arch/nvim/coc-settings.json ~/.config/nvim/coc-settings.json 
+    ln -f ~/.cfg/arch/nvim/coc-settings.json ~/.config/nvim/coc-settings.json 
 
     if [ -f ~/.config/nvim/init.vim ]; then
         echo "local init.vim deteced, backing up.."
         mv -f ~/.config/nvim/init.vim ~/.cfg/backups/init.vim
     fi
     echo "Linking init.vim.."
-    ln -sf ~/.cfg/arch/nvim/init.vim ~/.config/nvim/init.vim 
+    ln -f ~/.cfg/arch/nvim/init.vim ~/.config/nvim/init.vim 
 }
 
 echo ""
