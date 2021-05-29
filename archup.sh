@@ -323,6 +323,20 @@ configs() {
     else
         git clone https://github.com/mapkts/.cfg.git
     fi
+
+    if [ -f ~/.config/nvim/coc-settings.json ]; then
+        echo "local coc-settings.json deteced, backing up.."
+        mv -f ~/.config/nvim/coc-settings.json ~/.cfg/backups/coc-settings.json
+    fi
+    echo "Linking coc-settings.json.."
+    ln -sf ~/.cfg/arch/nvim/coc-settings.json ~/.config/nvim/coc-settings.json 
+
+    if [ -f ~/.config/nvim/init.vim ]; then
+        echo "local init.vim deteced, backing up.."
+        mv -f ~/.config/nvim/init.vim ~/.cfg/backups/init.vim
+    fi
+    echo "Linking init.vim.."
+    ln -sf ~/.cfg/arch/nvim/init.vim ~/.config/nvim/init.vim 
 }
 
 echo ""
@@ -341,22 +355,22 @@ echo ""
 read -r -p "command to run: " cmd
 
 case $cmd in
-    1) netup ;;
-    2) bootstrap ;;
-    3) rootinit ;;
-    4) wifiinit ;;
-    5) xorg ;;
-    6) pkgs ;;
-    7) xpkgs ;;
-    8) userinit ;;
-    9) grubinit ;;
-    10) yayinit ;;
-    11) yaypkgs ;;
-    12) yayxpkgs ;;
-    13) userconf ;;
-    14) clashproxy ;;
-    15) rustup ;;
-    16) configs ;;
+    1  |netup) netup ;;
+    2  |boostrap) bootstrap ;;
+    3  |rootinit) rootinit ;;
+    4  |wifiinit) wifiinit ;;
+    5  |xorg) xorg ;;
+    6  |pkgs) pkgs ;;
+    7  |xpkgs) xpkgs ;;
+    8  |userinit) userinit ;;
+    9  |grubinit) grubinit ;;
+    10 |yayinit) yayinit ;;
+    11 |yaypkgs) yaypkgs ;;
+    12 |yayxpkgs) yayxpkgs ;;
+    13 |userconf) userconf ;;
+    14 |clashproxy) clashproxy ;;
+    15 |rustup) rustup ;;
+    16 |configs) configs ;;
     *)
         echo "error: unrecognized command" >&2
         exit 1
