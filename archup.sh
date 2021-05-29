@@ -118,6 +118,7 @@ pkgs() {
         nodejs npm rustup go go-tools \
         python python2 python-pip python2-pip \
         iputils inetutils whois bind-tools dhcpcd \
+        xf86-input-libinput \
         cups \
         shellcheck \
         pdftk \
@@ -137,6 +138,9 @@ xpkgs() {
     sudo pacman --noconfirm -S \
         xterm \
         alacritty \
+        bspwm sxhkd \
+        xclip \
+        ranger \
         xsane \
         xbindkeys \
         libnotify \
@@ -146,7 +150,6 @@ xpkgs() {
         mpv \
         nitrogen \
         numlockx \
-        xclip \
         xdotool \
         trayer \
         freerdp \
@@ -166,8 +169,8 @@ yayinit() {
 
 yaypkgs() {
     yay --noconfirm -S \
-        neovim-nightly-bin \
-        vim-plug-git \
+        neovim-nightly-bin vim-plug-git \
+        polybar \
         ngrok \
         par \
         zsh-autosuggestions \
@@ -326,24 +329,81 @@ configs() {
 
     if [ -f ~/archup.sh ]; then
         echo "local archup.sh deteced, backing up.."
-        mv -f ~/archup.sh ~/.cfg/backups/archup.sh
+        install ~/archup.sh ~/.cfg/backups/archup.sh
     fi
-    echo "Linking archup.sh.."
-    ln -f ~/.cfg/archup.sh ~/archup.sh
+    ln -sf ~/.cfg/archup.sh ~/archup.sh
+
+    if [ -f ~/.gitconfig ]; then
+        echo "local .gitconfig deteced, backing up.."
+        install ~/.gitconfig ~/.cfg/backups/.gitconfig
+    fi
+    ln -sf ~/.cfg/arch/.gitconfig ~/.gitconfig
+
+    if [ -f ~/.xinitrc ]; then
+        echo "local .xinitrc deteced, backing up.."
+        install ~/.xinitrc ~/.cfg/backups/.xinitrc
+    fi
+    ln -sf ~/.cfg/arch/.xinitrc ~/.xinitrc
+
+    if [ -f ~/.xprofile ]; then
+        echo "local .xprofile deteced, backing up.."
+        install ~/.xprofile ~/.cfg/backups/.xprofile
+    fi
+    ln -sf ~/.cfg/arch/.xprofile ~/.xprofile
+
+    if [ -f ~/.Xresources ]; then
+        echo "local .Xresources deteced, backing up.."
+        install ~/.Xresources ~/.cfg/backups/.Xresources
+    fi
+    ln -sf ~/.cfg/arch/.Xresources ~/.Xresources
 
     if [ -f ~/.config/nvim/coc-settings.json ]; then
         echo "local coc-settings.json deteced, backing up.."
-        mv -f ~/.config/nvim/coc-settings.json ~/.cfg/backups/coc-settings.json
+        mkdir -p ~/.cfg/backups/nvim
+        install ~/.config/nvim/coc-settings.json ~/.cfg/backups/nvim/coc-settings.json
     fi
-    echo "Linking coc-settings.json.."
-    ln -f ~/.cfg/arch/nvim/coc-settings.json ~/.config/nvim/coc-settings.json 
+    mkdir -p ~/.config/nvim
+    ln -sf ~/.cfg/arch/nvim/coc-settings.json ~/.config/nvim/coc-settings.json
 
     if [ -f ~/.config/nvim/init.vim ]; then
-        echo "local init.vim deteced, backing up.."
-        mv -f ~/.config/nvim/init.vim ~/.cfg/backups/init.vim
+        echo "local nvim deteced, backing up.."
+        mkdir -p ~/.cfg/backups/nvim
+        install ~/.config/nvim/init.vim ~/.cfg/backups/nvim/init.vim
     fi
-    echo "Linking init.vim.."
-    ln -f ~/.cfg/arch/nvim/init.vim ~/.config/nvim/init.vim 
+    mkdir -p ~/.config/nvim
+    ln -sf ~/.cfg/arch/nvim/init.vim ~/.config/nvim/init.vim
+
+    if [ -f ~/.config/bspwm/bspwmrc ]; then
+        echo "local bspwm deteced, backing up.."
+        mkdir -p ~/.cfg/backups/bspwm
+        install ~/.config/bspwm/bspwmrc ~/.cfg/backups/bspwm/bspwmrc
+    fi
+    mkdir -p ~/.config/bspwm
+    ln -sf ~/.cfg/arch/bspwm/bspwmrc ~/.config/bspwm/bspwmrc
+
+    if [ -f ~/.config/sxhkd/sxhkdrc ]; then
+        echo "local sxhkd deteced, backing up.."
+        mkdir -p ~/.cfg/backups/sxhkd
+        install ~/.config/sxhkd/sxhkdrc ~/.cfg/backups/sxhkd/sxhkdrc
+    fi
+    mkdir -p ~/.config/sxhkd
+    ln -sf ~/.cfg/arch/sxhkd/sxhkdrc ~/.config/sxhkd/sxhkdrc
+
+    if [ -f ~/.config/polybar/config ]; then
+        echo "local polybar deteced, backing up.."
+        mkdir -p ~/.cfg/backups/polybar
+        install ~/.config/polybar/config ~/.cfg/backups/polybar/config
+    fi
+    mkdir -p ~/.config/polybar
+    ln -sf ~/.cfg/arch/polybar/config ~/.config/polybar/config
+
+    if [ -f ~/.config/polybar/launch.sh ]; then
+        echo "local polybar deteced, backing up.."
+        mkdir -p ~/.cfg/backups/polybar
+        install ~/.config/polybar/launch.sh ~/.cfg/backups/polybar/launch.sh
+    fi
+    mkdir -p ~/.config/polybar
+    ln -sf ~/.cfg/arch/polybar/launch.sh ~/.config/polybar/launch.sh
 }
 
 echo ""

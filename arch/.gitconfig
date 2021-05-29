@@ -10,13 +10,16 @@
 	proxy = socks5://127.0.0.1:1080
 [credential]
 	helper = store
+[merge]
+	tool = nvim -d
 [alias]
+    st = status
+    cm = commit -v
 	lg = log --graph --decorate --pretty=oneline --abbrev-commit 
+    ls = log -1 HEAD
 	df = diff
 	dc = diff --cached
-	st = status
 	ck = checkout
-	ci = commit -v
-	cm = commit -v
+    sl = stash list
 [pull]
 	rebase = true
