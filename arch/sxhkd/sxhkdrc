@@ -1,1 +1,174 @@
-/home/mapkts/.cfg/arch/sxhkd/sxhkdrc
+### wm independent hotkeys ###
+
+# terminal emulator
+super + c
+	alacritty
+
+# media keys
+
+# not working currently
+{XF86MonBrightnessUp, XF86MonBrightnessDown}
+	light -{A, U} 5
+
+{XF86AudioRaiseVolume, XF86AudioLowerVolume}
+	/usr/bin/pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo {+5%, -5%}
+
+XF86AudioMute
+	/usr/bin/pactl set-sink-mute alsa_output.pci-0000_00_1b.0.analog-stereo toggle
+
+# mute microphone
+XF86AudioMicMute
+	amixer set Capture toggle
+
+# program launcher
+# super + @space
+#	dmenu_run
+
+super + l
+	slock
+
+Print
+	scrot
+
+super + a
+	xterm -e /bin/bash -i
+
+super + e
+	bspc desktop -f '^7'; \
+	alacritty -t mutt -e tmux new-session -A -s mail /bin/bash -ic "mutt -e 'source ~/.mutt/account.fm'"
+
+super + {j,k}
+	pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume @DEFAULT_SINK@ {-,+}3%
+
+super + p
+	playerctl play-pause
+
+super + i
+	playerctl next
+
+super + u
+	playerctl previous
+
+# make sxhkd reload its configuration files:
+super + Escape
+	pkill -USR1 -x sxhkd
+
+#
+# bspwm hotkeys
+#
+
+# quit/restart bspwm
+super + alt + {q,r}
+	bspc {quit,wm -r}
+
+# close or kill a window
+super + {_,shift + }w
+	bspc node -{c,k}
+
+# alternate between the tiled and monocle layout
+super + m
+	bspc desktop -l next
+
+# send the newest marked node to the newest preselected node
+super + y
+	bspc node newest.local -n newest.!automatic.local
+
+# swap the current node and the biggest node on this screen
+super + Return
+	bspc node newest.local -s biggest.local
+
+#
+# state/flags
+#
+
+# set the window state
+super + {t,shift + t,s,f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# set the node flags
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+
+# focus/swap
+#
+
+# focus the node in the given direction
+alt + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# focus the older or newer node in the focus history
+super + {_,shift +}o
+	bspc wm -h off; \
+	bspc node {older,newer} -f; \
+	bspc wm -h on
+
+# focus or send to the next/previous monitor
+super + {_,shift + }bracket{left,right}
+	bspc {monitor -f,node -m} {prev,next}
+
+# focus the given desktop on the current monitor
+alt + {1-9,0}
+	bspc desktop -f '^{1-9,10}.local'
+
+# move current window to the given desktop on the current monitor
+alt + shift + {1-9,0}
+	bspc node -d '^{1-9,10}.local' --follow
+
+# switch between windows
+alt + {_, shift} Tab
+    bspc node -f {last, prev}
+
+# send the current 
+
+#
+# preselect
+#
+
+# preselect the direction
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# move/resize
+#
+
+# move window to a monitor & switch to it
+super + shift + equal
+    bspc node -m last --follow
+
+# expand/contract a window by moving one of its side outward/inward
+#super + r : {h,j,k,l}
+#    STEP=20; SELECTION={1,2,3,4}; \
+#    bspc node -z $(echo "left -$STEP 0,bottom 0 $STEP,top 0 -$STEP,right $STEP 0" | cut -d',' -f$SELECTION) || \
+#    bspc node -z $(echo "right -$STEP 0,top 0 $STEP,bottom 0 -$STEP,left $STEP 0" | cut -d',' -f$SELECTION)
+
+# move a floating window
+super + {Left,Down,Up,Right}
+	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# Rotate tree
+super + shift + {d,a}
+    bspc node @/ -C {forward,backward}
+
+# Show help
+super + slash
+    ~/.cfg/arch/scripts/sxhkd-help
+
+# Change wallpaper
+super + b + g
+    # RAND=$(find "$WALLPAPERS" -xtype f | sort -R | head -1) \
+        # xwallpaper --zoom "$WALLPAPERS/$RAND"
+    nitrogen --set-zoom-fill --random ~/.wallpapers

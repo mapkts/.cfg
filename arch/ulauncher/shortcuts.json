@@ -1,0 +1,52 @@
+{
+    "13e40870-390d-4148-9889-6c1555df5fa7": {
+        "id": "13e40870-390d-4148-9889-6c1555df5fa7",
+        "name": "Google Search",
+        "keyword": "g",
+        "cmd": "https://google.com/search?q=%s",
+        "icon": "/usr/share/ulauncher/media/google-search-icon.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1622306509.9349065
+    },
+    "b30e5cbf-e4a9-4ac3-ae88-269f16d8168f": {
+        "id": "b30e5cbf-e4a9-4ac3-ae88-269f16d8168f",
+        "name": "Stack Overflow",
+        "keyword": "so",
+        "cmd": "http://stackoverflow.com/search?q=%s",
+        "icon": "/usr/share/ulauncher/media/stackoverflow-icon.svg",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1622306509.9349587
+    },
+    "655cc323-5792-4cc0-89df-53c4bd9ac6b5": {
+        "id": "655cc323-5792-4cc0-89df-53c4bd9ac6b5",
+        "name": "Wikipedia",
+        "keyword": "wk",
+        "cmd": "https://en.wikipedia.org/wiki/%s",
+        "icon": "/usr/share/ulauncher/media/wikipedia-icon.png",
+        "is_default_search": true,
+        "run_without_argument": false,
+        "added": 1622306509.9349916
+    },
+    "2851ddbf-3b3f-4574-9810-293a4198d1ec": {
+        "id": "2851ddbf-3b3f-4574-9810-293a4198d1ec",
+        "name": "Zhihu",
+        "keyword": "zh",
+        "cmd": "https://google.com/search?q=%s+site%3Awww.zhihu.com&oq=daxue+site%3Awww.zhihu.com",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": false,
+        "added": 1622309294.711308
+    },
+    "8ebebf53-cae2-44c2-a48e-09d551e83922": {
+        "id": "8ebebf53-cae2-44c2-a48e-09d551e83922",
+        "name": "Baidu Search",
+        "keyword": "bd",
+        "cmd": "https://www.baidu.com/s?wd=%s",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": false,
+        "added": 1622382908.9845405
+    }
+}

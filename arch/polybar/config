@@ -7,13 +7,26 @@ primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
 
+shade1 = #0D47A1
+shade2 = #1565C0
+shade3 = #1976D2
+shade4 = #1E88E5
+shade5 = #2196F3
+shade6 = #42A5F5
+shade7 = #64B5F6
+shade8 = #90CAF9
+
 [bar/main]
-monitor = ${env:MONITOR:HDMI-A-0}
+monitor = ${env:MONITOR:eDP}
 width = 100%
-height = 2.5%
+height = 3%
 radius = 6.0
 fixed-center = false
 bottom = true
+
+modules-left = date bspwm xkeyboard
+;modules-center = xwindow 
+modules-right = github eth1 eth2 wlan pulseaudio backlight memory cpu battery
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -23,14 +36,11 @@ line-size = 2
 padding = 1
 module-margin = 1
 
-font-0 = "Noto Sans Mono:size=10;1"
-font-1 = "Noto Sans Mono:size=10;1"
-font-2 = "Noto Sans Symbols:size=10;1"
-font-3 = "Noto Sans Symbols2:size=10;1"
-
-modules-left = date bspwm xwindow
-modules-center =
-modules-right = github eth1 eth2 wlan cpu battery
+font-0 = "Noto Sans Mono:size=16;1"
+font-1 = "Noto Sans Mono:size=16;1"
+font-2 = "Noto Sans Symbols:size=18;1"
+font-3 = "Noto Sans Symbols2:size=18;1"
+font-4 = "Iosevka Nerd Font:pixelsize=18;1"
 
 tray-position = right
 tray-padding = 2
@@ -48,7 +58,7 @@ label = %title:0:30:...%
 [module/bspwm]
 type = internal/bspwm
 pin-workspaces = false
-enable-click = false
+enable-click = true
 enable-scroll = false
 
 label-focused = " %name% "
@@ -66,47 +76,89 @@ label-empty-foreground = #555555
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = "💻 "
+format-prefix = ""
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
 label = %percentage:2%%
 
+[module/battery]
+; type = internal/battery
+; battery = BAT0
+; adapter = ADP0
+type = internal/battery
+full-at = 99
+battery = BAT0
+adapter = ADP0 
+time-format = %H:%M
+format-charging = <animation-charging> <label-charging>
+format-charging-underline = #32CD32
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-underline = #32CD32
+format-full-prefix = " "
+format-full-underline = #32CD32
+format-full-prefix-foreground = ${colors.foreground-alt}
+label-charging = %percentage:2%%
+label-discharging = %percentage:2%%
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
+ramp-capacity-6 = 
+ramp-capacity-7 = 
+ramp-capacity-8 = 
+ramp-capacity-9 = 
+ramp-capacity-foreground = ${colors.foreground-alt}
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-5 = 
+animation-charging-6 = 
+animation-charging-framerate = 750
+animation-charging-foreground = ${colors.foreground-alt}
+
+[module/backlight]
+type = internal/backlight
+card = amdgpu_bl0
+format = <ramp> <label>
+format-underline = #FFF
+label = %percentage%%
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
+ramp-foreground = ${colors.foreground-alt}
+enable-scroll = true
+
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = "🗍 "
+format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #4bffdc
 label = %percentage_used:2%%
 
 [module/wlan]
 type = internal/network
-interface = wlp2s0
+interface = wlp1s0
 interval = 5.0
-
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
-
-label-disconnected =
-
-ramp-signal-0 = 🌧
-ramp-signal-1 = 🌦
-ramp-signal-2 = 🌥
-ramp-signal-3 = 🌤
-ramp-signal-4 = 🌣
-
-[module/eth2]
-type = internal/network
-interface = enp12s0u1
-interval = 3.0
-
-format-connected-underline = #115511
-format-connected-prefix = "🖧 "
+accumulate-stats = true
+unknown-as-up = true
+format-connected = <label-connected>
+format-connected-prefix = "直 "
 format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
-
-format-disconnected =
+format-connected-underline = #9f78e1
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = "睊 "
+format-disconnected-prefix-foreground = ${colors.foreground-alt}
+format-disconnected-underline = #9f78e1
+; label-connected = "%{A1:networkmanager_dmenu &:} %essid%  %downspeed% 祝 %upspeed%%{A}"
+label-connected = "%{A1:networkmanager_dmenu &:}  %downspeed% 祝 %upspeed%%{A}"
+label-disconnected = "Offline"
 
 [module/eth1]
 type = internal/network
@@ -122,15 +174,15 @@ format-disconnected =
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 1.0
 
 date = "%a %d"
-date-alt = %a %b %d
+date-alt = "%a %Y-%m-%d"
 
-time = %I:%M
-time-alt = %I:%M%p
+time = "%H:%M"
+time-alt = "%H:%M:%S"
 
-format-prefix =
+format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #0a6cf5
 
@@ -138,14 +190,165 @@ label = %date% %time%
 
 [module/github]
 type = internal/github
-token = ${file:/home/jon/.config/github/notifications.token}
-user = jonhoo
+token = ${file:/home/mapkts/.config/github/notifications.token}
+user = mapkts
 empty-notifications = false
 ;label = %{u#ff9900 +u} %notifications% %{u-}
 label = %{u#0099ff +u} 📫 %{u-}
 interval = 10
 
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+blacklist-1 = scroll lock
+
 [settings]
 screenchange-reload = true
 
-; vim:ft=dosini
+[module/alsa]
+type = internal/alsa
+
+; Soundcard to be used
+; Usually in the format hw:# where # is the card number
+; You can find the different card numbers in `/proc/asound/cards`
+master-soundcard = default
+speaker-soundcard = default
+headphone-soundcard = default
+
+; Name of the master, speaker and headphone mixers
+; Use the following command to list available mixer controls:
+; $ amixer scontrols | sed -nr "s/.*'([[:alnum:]]+)'.*/\1/p"
+; If master, speaker or headphone-soundcard isn't the default, 
+; use `amixer -c # scontrols` instead where # is the number 
+; of the master, speaker or headphone soundcard respectively
+;
+; Default: Master
+master-mixer = Master
+interval = 5
+format-volume = <ramp-volume> <label-volume>
+format-muted = <label-muted>
+format-muted-prefix = 
+format-muted-foreground = ${colors.foreground-alt}
+label-volume = %percentage%%
+label-muted = " muted"
+label-muted-foreground = ${colors.alert}
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-foreground = ${colors.foreground-alt}
+ramp-headphones-0 = 
+ramp-headphones-foreground = ${colors.foreground-alt}
+
+[module/pulseaudio]
+type = internal/pulseaudio
+; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
+; If not, uses default sink
+sink = alsa_output.pci-0000_03_00.6.analog-stereo
+; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
+; Default: true
+use-ui-max = false
+interval = 5
+format-volume = <ramp-volume> <label-volume>
+format-volume-underline = #FFFF00
+format-muted = <label-muted>
+format-muted-prefix = 
+format-muted-foreground = ${colors.foreground-alt}
+format-muted-underline = #FFFF00
+label-volume = %percentage%%
+label-muted = " Muted"
+label-muted-foreground = ${colors.alert}
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-foreground = ${colors.foreground-alt}
+
+[module/mpd]
+type = internal/mpd
+
+; Host where mpd is running (either ip or domain name)
+; Can also be the full path to a unix socket where mpd is running.
+;;host = 127.0.0.1
+;;port = 6600
+;;password = mysecretpassword
+
+; Seconds to sleep between progressbar/song timer sync
+; Default: 1
+interval = 1
+
+; Available tags:
+;   <label-song> (default)
+;   <label-time>
+;   <bar-progress>
+;   <toggle> - gets replaced with <icon-(pause|play)>
+;   <toggle-stop> - gets replaced with <icon-(stop|play)>
+;   <icon-random>
+;   <icon-repeat>
+;   <icon-repeatone> (deprecated)
+;   <icon-single> - Toggle playing only a single song. Replaces <icon-repeatone>
+;   <icon-consume>
+;   <icon-prev>
+;   <icon-stop>
+;   <icon-play>
+;   <icon-pause>
+;   <icon-next>
+;   <icon-seekb>
+;   <icon-seekf>
+format-online = <label-song> <icon-prev> <toggle> <icon-next>
+format-online-prefix = ﱘ
+format-online-foreground = ${color.foreground}
+
+;format-playing = ${self.format-online}
+;format-paused = ${self.format-online}
+;format-stopped = ${self.format-online}
+
+; Available tags:
+;   <label-offline>
+format-offline = <label-offline>
+format-offline-prefix = ﱘ
+format-offline-foreground = ${color.foreground}
+
+; Available tokens:
+;   %artist%
+;   %album-artist%
+;   %album%
+;   %date%
+;   %title%
+; Default: %artist% - %title%
+label-song =  " %artist% - %title%"
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+; Available tokens:
+;   %elapsed%
+;   %total%
+; Default: %elapsed% / %total%
+label-time = %elapsed% / %total%
+
+; Available tokens:
+;   None
+label-offline = " Offline"
+
+; Only applies if <icon-X> is used
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+icon-seekb = 
+icon-seekf = 
+icon-random = 
+icon-repeat = 
+icon-repeatone = 
+icon-single = 
+icon-consume = 
+
+; Used to display the state of random/repeat/repeatone/single
+; Only applies if <icon-[random|repeat|repeatone|single]> is used
+toggle-on-foreground = ${colors.primary}
+toggle-off-foreground = ${colors.alert}
+
+; Only applies if <bar-progress> is used
+;;bar-progress-width = 45
+;;bar-progress-indicator = |
+;;bar-progress-fill = ─
+;;bar-progress-empty = ─

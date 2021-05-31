@@ -78,10 +78,56 @@ rootinit() {
 wifiinit() {
     sudo systemctl enable --now NetworkManager
 
-    read -r -p "wifi name: " ssid
+    nmcli device wifi list
+
+    read -r -p "wifi name/ssid: " ssid
     read -r -p "wifi password: " passwd
 
     nmcli device wifi connect $ssid password $passwd
+}
+
+wifi() {
+    echo ""
+    echo "#######################################"
+    echo "              Wifi Actions             "
+    echo "#######################################"
+    echo ""
+    echo "1) scan"
+    echo "2) connect"
+    echo "3) add"
+    echo "4) add hidden"
+    echo "5) show"
+    echo "6) off"
+    echo ""
+    echo "see nmcli --help for more network actions."
+    echo ""
+    read -r -p "action to run: " action
+
+    case $action in
+        1|scan)
+            nmcli device wifi list
+            ;;
+        2|connect)
+            read -r -p "connect to network: " ssid
+            nmcli connection up $ssid
+            ;;
+        3|add)
+            read -r -p "wifi name/ssid: " ssid
+            read -r -p "wifi password: " passwd
+            nmcli device wifi connect $ssid password $passwd
+            ;;
+        4|"add hidden"|"add_hidden")
+            read -r -p "wifi name/ssid: " ssid
+            read -r -p "wifi password: " passwd
+            nmcli device wifi connect $ssid password $passwd hidden yes
+            ;;
+        5|show)
+            nmcli connection show
+            ;;
+        6|off)
+            nmcli radio wifi off
+            ;;
+    esac
 }
 
 xorg() {
@@ -114,6 +160,7 @@ pkgs() {
         os-prober mtools dosfstools \
         zsh sudo \
         alsa-utils pulseaudio pulseaudio-alsa pavucontrol \
+        light \
         aspell aspell-en hunspell hunspell-en_US \
         nodejs npm rustup go go-tools \
         python python2 python-pip python2-pip \
@@ -141,6 +188,9 @@ xpkgs() {
         bspwm sxhkd \
         xclip \
         ranger \
+        sxiv \
+        rofi \
+        mpd \
         xsane \
         xbindkeys \
         libnotify \
@@ -170,7 +220,8 @@ yayinit() {
 yaypkgs() {
     yay --noconfirm -S \
         neovim-nightly-bin vim-plug-git \
-        polybar \
+        polybar ulauncher nitrogen psensor \
+        slock-git scrot\
         ngrok \
         par \
         zsh-autosuggestions \
@@ -293,6 +344,80 @@ rustup() {
     yay -Sy rust-analyzer-git
 }
 
+fonts() {
+    cd $HOME || exit 1
+
+	echo -e "\n[*] Installing fonts..."
+	if [[ -d ".local/share/fonts" ]]; then
+		cp -rf .cfg/fonts/* ".local/share/fonts"
+	else
+		mkdir -p ".local/share/fonts"
+		cp -rf .cfg/fonts/* ".local/share/fonts"
+	fi
+}
+
+mountwinfs() {
+    read -r -p "windows partitions is NOT in fstab? [Y/n]: " exists
+    case $exists in
+        Y)
+            echo "" | sudo tee -a /etc/fstab 1>/dev/null
+            echo "# /dev/nvme0n1p3 & /dev/nvme0n1p4 (Windows partitions)" | sudo tee -a /etc/fstab 1>/dev/null
+            echo "# See https://wiki.archlinux.org/title/NTFS-3G for details." | sudo tee -a /etc/fstab 1>/dev/null
+            echo "/dev/nvme0n1p3  /mnt/c  ntfs-3g uid=mapkts,gid=wheel,dmask=022,fmask=133 0 0" | sudo tee -a /etc/fstab 1>/dev/null
+            echo "/dev/nvme0n1p4  /mnt/d  ntfs-3g uid=mapkts,gid=wheel,dmask=022,fmask=133 0 0" | sudo tee -a /etc/fstab 1>/dev/null
+            echo "windows partitions is successfully mounted."
+            ;;
+        n)
+            echo "windows partition is already mounted, exiting.."
+            ;;
+        *)
+            echo "error: unrecognized option: $exist" 1>&2
+            ;;
+    esac
+}
+
+fcitx() {
+    sudo pacman -S --noconfirm fcitx5 fcitx5-chinese-addons fcitx5-qt fcitx5-gtk fcitx5-config-qt
+    yay -S --noconfirm fcitx5-pinyin-zhwiki fcitx5-material-color
+    
+    cd $HOME || exit 1
+    if [ ! -f ~/.pam_enviroment ]; then
+        touch ~/.pam_enviroment   
+    fi
+        
+    fcitx5 &
+
+    # autostart
+    sudo cp /usr/share/applications/fcitx5.desktop /etc/xdg/autostart/
+}
+
+keycode() {
+    xev | grep -A2 --line-buffered '^KeyRelease' | sed -n '/keycode /s/^.*keycode \([0-9]*\).* (.*, \(.*\)).*$/\1 \2/p'
+}
+
+winfonts() {
+    cwd=pwd
+    read -r -p "please enter the mount point of windows system (default: /mnt/c): " mountpoint
+
+    if [ -z "$mountpoint" ]; then
+        $mountpoint=/mnt/c/
+    fi
+    
+    if [ -d "$mountpoint/Windows/Fonts" ]; then
+        sudo mkdir -p /usr/share/fonts/winfonts/
+        sudo cp -f $mountpoint/Windows/Fonts/* /usr/share/fonts/winfonts/
+        cd /usr/share/fonts/winfonts/
+        sudo rm -f *.fon
+        sudo mkfontscale
+        sudo mkfontdir
+        fc-cache -fv
+        cd $cwd
+    else
+        echo "error: directory $mountpoint/Windows/Fonts is not existed" 1>&2
+        exit 1
+    fi
+}
+
 configs() {
     cd $HOME || exit 1
 
@@ -351,6 +476,18 @@ configs() {
     fi
     ln -sf ~/.cfg/arch/.xprofile ~/.xprofile
 
+    if [ -f ~/.pam_environment ]; then
+        echo "local .pam_environment deteced, backing up.."
+        install ~/.pam_environment ~/.cfg/backups/.pam_environment
+    fi
+    ln -sf ~/.cfg/arch/.pam_environment ~/.pam_environment
+
+    if [ -f ~/.bashrc ]; then
+        echo "local .bashrc deteced, backing up.."
+        install ~/.bashrc ~/.cfg/backups/.bashrc
+    fi
+    ln -sf ~/.cfg/arch/.bashrc ~/.bashrc
+
     if [ -f ~/.Xresources ]; then
         echo "local .Xresources deteced, backing up.."
         install ~/.Xresources ~/.cfg/backups/.Xresources
@@ -372,6 +509,14 @@ configs() {
     fi
     mkdir -p ~/.config/nvim
     ln -sf ~/.cfg/arch/nvim/init.vim ~/.config/nvim/init.vim
+
+    if [ -f ~/.config/alacritty/alacritty.yml ]; then
+        echo "local alacritty.yml deteced, backing up.."
+        mkdir -p ~/.cfg/backups/alacritty.yml
+        install ~/.config/alacritty/alacritty.yml ~/.cfg/backups/alacritty/alacritty.yml
+    fi
+    mkdir -p ~/.config/alacritty
+    ln -sf ~/.cfg/arch/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
 
     if [ -f ~/.config/bspwm/bspwmrc ]; then
         echo "local bspwm deteced, backing up.."
@@ -417,8 +562,9 @@ echo "5) xorg          6) pkgs           7) xpkgs"
 echo "8) userinit      9) grubinit"
 echo "10) yayinit      11) yaypkgs       12) yayxpkgs"
 echo "13) userconf     14) clashproxy    15) rustup"
-echo "16) configs"
-echo ""
+echo "16) configs      17) fonts         18) keycode"
+echo "19) wifi         20) mountwinfs    21) fcitx"
+echo "22) winfonts"
 read -r -p "command to run: " cmd
 
 case $cmd in
@@ -438,6 +584,12 @@ case $cmd in
     14 |clashproxy) clashproxy ;;
     15 |rustup) rustup ;;
     16 |configs) configs ;;
+    17 |fonts) fonts ;;
+    18 |keycode) keycode ;;
+    19 |wifi) wifi ;;
+    20 |mountwinfs) mountwinfs ;;
+    21 |fcitx) fcitx ;;
+    22 |winfonts) winfonts ;;
     *)
         echo "error: unrecognized command" >&2
         exit 1
