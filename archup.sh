@@ -387,8 +387,8 @@ fcitx() {
         
     fcitx5 &
 
-    # autostart
-    sudo cp /usr/share/applications/fcitx5.desktop /etc/xdg/autostart/
+    # autostart (use bspwmrc instead)
+    # sudo cp -f /usr/share/applications/fcitx5.desktop /etc/xdg/autostart/
 }
 
 keycode() {
@@ -417,6 +417,15 @@ winfonts() {
         exit 1
     fi
 }
+
+
+_ln_fl_fl() {
+    if [ ! -f "$2" ]; then
+        echo "$2 is not a file" 1>&2
+        exit 1
+    fi
+}
+
 
 configs() {
     cd $HOME || exit 1

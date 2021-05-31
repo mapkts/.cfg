@@ -3,6 +3,7 @@
 sxhkd &
 ulauncher --hide-window --no-window-shadow &
 nitrogen --restore &
+fcitx5 &
 [ -x ~/.config/polybar/launch.sh ] && ~/.config/polybar/launch.sh &
 [ -x ~/.cargo/bin/buzz ] && ~/.cargo/bin/buzz &
 if [ -x ~/.cargo/bin/keybase-chat-notifier ]; then

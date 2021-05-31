@@ -197,11 +197,6 @@ empty-notifications = false
 label = %{u#0099ff +u} 📫 %{u-}
 interval = 10
 
-[module/xkeyboard]
-type = internal/xkeyboard
-blacklist-0 = num lock
-blacklist-1 = scroll lock
-
 [settings]
 screenchange-reload = true
 
