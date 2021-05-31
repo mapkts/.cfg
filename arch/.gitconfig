@@ -2,7 +2,7 @@
 	name = Aaron Taner
 	email = mapkts@gmail.com
 [core]
-	editor = vim
+	editor = nvim
 	autocrlf = false
 [https]
 	proxy = socks5://127.0.0.1:1080
