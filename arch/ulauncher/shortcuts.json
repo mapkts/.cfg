@@ -2,7 +2,7 @@
     "13e40870-390d-4148-9889-6c1555df5fa7": {
         "id": "13e40870-390d-4148-9889-6c1555df5fa7",
         "name": "Google Search",
-        "keyword": "g",
+        "keyword": "gg",
         "cmd": "https://google.com/search?q=%s",
         "icon": "/usr/share/ulauncher/media/google-search-icon.png",
         "is_default_search": true,

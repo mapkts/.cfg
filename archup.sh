@@ -173,7 +173,8 @@ pkgs() {
         docker espeak ffmpeg jq ripgrep youtube-dl fzf \
         iotop htop linux-tools pkgfile pwgen pv strace tig time tree valgrind \
         git vim s3cmd colordiff curl wget ctags darkhttpd pass rsync \
-        wireshark-cli wireshark-qt
+        wireshark-cli wireshark-qt \
+        archlinuxcn-keyring \
 
     sudo pkgfile --update
 
@@ -204,8 +205,11 @@ xpkgs() {
         trayer \
         freerdp \
         gmrun \
+        firefox \
+        wine wine-wechat \
         noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra \
-        firefox
+        wqy-microhei wqy-bitmapfont wqy-microhei-lite \
+        adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts
 }
 
 yayinit() {
@@ -234,6 +238,7 @@ yayxpkgs() {
     yay --noconfirm -S \
         dzen2-xft-xpm-xinerama-git \
         google-chrome \
+        obs-studio \
         mirage \
         idesk \
         gkrellm \
@@ -418,6 +423,21 @@ winfonts() {
     fi
 }
 
+nobeep() {
+    sudo rmmod pcspkr 2>/dev/null || true
+
+    # blacklist the `pcspkr` kernel module.
+    cmd="blacklist pcspkr"
+    file="/etc/modprobe.d/nobeep.conf"
+
+    # if the file doesn't exist or it exists but the cmd string is not in the file, 
+    # we echo the cmd # string into it.
+    if [ ! -f "$file" ] || [ $(grep -c "$cmd" "$file") -eq 0 ]; then
+        echo "$cmd" | sudo tee -a "$file" 1>/dev/null
+    fi
+
+    echo "reboot your computer to check if 'pcspkr' module has been disabled."
+}
 
 _ln_fl_fl() {
     if [ ! -f "$2" ]; then
@@ -425,7 +445,6 @@ _ln_fl_fl() {
         exit 1
     fi
 }
-
 
 configs() {
     cd $HOME || exit 1
@@ -573,7 +592,7 @@ echo "10) yayinit      11) yaypkgs       12) yayxpkgs"
 echo "13) userconf     14) clashproxy    15) rustup"
 echo "16) configs      17) fonts         18) keycode"
 echo "19) wifi         20) mountwinfs    21) fcitx"
-echo "22) winfonts"
+echo "22) winfonts     23) nobeep"
 read -r -p "command to run: " cmd
 
 case $cmd in
@@ -599,6 +618,7 @@ case $cmd in
     20 |mountwinfs) mountwinfs ;;
     21 |fcitx) fcitx ;;
     22 |winfonts) winfonts ;;
+    23 |nobeep) nobeep ;;
     *)
         echo "error: unrecognized command" >&2
         exit 1

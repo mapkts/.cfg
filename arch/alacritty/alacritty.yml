@@ -155,7 +155,7 @@ font:
   #
   # I'd perfer 12.0 but setting it to 12.0 leaves lots of right/bottom paddings when running nvim
   # inside alacritty (not in fullscreen mode).
-  size: 11.0
+  size: 11
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter

@@ -62,6 +62,8 @@ if has("nvim") && has("win32")
     let g:python3_host_prog = 'C:\Users\mapkts\AppData\Local\Programs\Python\Python39\python.exe'
     let g:node_host_prog = 'C:\Users\mapkts\AppData\Roaming\npm\node_modules\neovim\bin\cli.js'
 elseif has("nvim") && has("unix")
+    set shell=/bin/bash
+
     let g:python_host_prog = '/usr/bin/python2'
     let g:python3_host_prog = '/usr/bin/python3'
     let g:node_host_prog = '/usr/bin/node'
@@ -173,8 +175,10 @@ endf
 " Overload Space
 if has('nvim') && has('win32')
     nnoremap <expr> <space> BufNr("cmd.EXE") > 0 ? (&buftype == 'terminal' ? '<c-^>' : ':b '. BufNr("cmd.EXE") . '<cr>') : ':terminal<cr>'
-else
-    nnoremap <expr> <space> BufNr("sh.exe") > 0 ? (&buftype == 'terminal' ? '<c-^>' : ':b '. BufNr("sh.exe") . '<cr>') : ':terminal ++curwin <cr>'
+elseif has('win32')
+    nnoremap <expr> <space> BufNr("sh.exe") > 0 ? (&buftype == 'terminal' ? '<c-^>' : ':b '. BufNr("sh.exe") . '<cr>') : ':terminal ++curwincr>'
+elseif has('unix')
+    nnoremap <expr> <space> BufNr("/bin/bash") > 0 ? (&buftype == 'terminal' ? '<c-^>' : ':b '. BufNr("/bin/bash") . '<cr>') : ':terminal<cr>'
 endif
 
 " BufNr definition

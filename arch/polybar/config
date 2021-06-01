@@ -1,11 +1,20 @@
 [colors]
-background = #222
-background-alt = #444
-foreground = #dfdfdf
-foreground-alt = #888
-primary = #ffb52a
-secondary = #e60053
-alert = #bd2c40
+background     = #222222
+background-alt = #444444
+foreground     = #dfdfdf
+foreground-alt = #888888
+primary        = #ffb52a
+secondary      = #e60053
+alert          = #bd2c40
+
+# rainbow colors
+red    = #ff0000
+orange = #ffa500
+yellow = #ffff00
+green  = #008000
+blue   = #0000ff
+indigo = #4b0082
+violet = #ee82ee
 
 shade1 = #0D47A1
 shade2 = #1565C0
@@ -25,7 +34,7 @@ fixed-center = false
 bottom = true
 
 modules-left = date bspwm xkeyboard
-;modules-center = xwindow 
+modules-center = xwindow 
 modules-right = github eth1 eth2 wlan pulseaudio backlight memory cpu battery
 
 background = ${colors.background}
@@ -43,8 +52,8 @@ font-3 = "Noto Sans Symbols2:size=18;1"
 font-4 = "Iosevka Nerd Font:pixelsize=18;1"
 
 tray-position = right
-tray-padding = 2
-tray-maxsize = 24
+tray-padding = 1
+tray-maxsize = 28 
 
 wm-restack = bspwm
 
@@ -139,13 +148,13 @@ type = internal/memory
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
+format-underline = #ffa500
 label = %percentage_used:2%%
 
 [module/wlan]
 type = internal/network
 interface = wlp1s0
-interval = 5.0
+interval = 2.0
 accumulate-stats = true
 unknown-as-up = true
 format-connected = <label-connected>
