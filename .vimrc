@@ -160,9 +160,9 @@ nnoremap <leader>w :w!<cr>
 nnoremap <leader>d :bw!<cr>
 
 " Jump out ) } ]
-inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap } <c-r>=ClosePair('}')<CR>
-inoremap ] <c-r>=ClosePair(']')<CR>
+" inoremap ) <c-r>=ClosePair(')')<CR>
+" inoremap } <c-r>=ClosePair('}')<CR>
+" inoremap ] <c-r>=ClosePair(']')<CR>
 
 function! ClosePair(char)        
     if getline('.')[col('.') - 1] == a:char                
