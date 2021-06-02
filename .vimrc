@@ -925,7 +925,6 @@ let g:neovide_cursor_vfx_particle_lifetime=1.2 " default: 1.2
 let g:neovide_cursor_vfx_particle_density=7.0  " default: 7.0
 let g:neovide_cursor_vfx_particle_speed=10.0   " default: 10.0
 
-
 " key mappings
 nnoremap <F11> :let g:neovide_fullscreen = ( neovide_fullscreen == v:false ? v:true : v:false )<CR><CR>
 

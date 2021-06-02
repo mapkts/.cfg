@@ -4,6 +4,9 @@
 super + a
 	alacritty
 
+super + p
+    scrot
+
 # media keys
 
 # not working currently
@@ -40,18 +43,18 @@ super + e
 super + {j,k}
 	pactl set-sink-mute @DEFAULT_SINK@ false ; pactl set-sink-volume @DEFAULT_SINK@ {-,+}3%
 
-super + p
-	playerctl play-pause
-
-super + i
-	playerctl next
-
-super + u
-	playerctl previous
-
-# make sxhkd reload its configuration files:
-super + Escape
-	pkill -USR1 -x sxhkd
+# super + p
+	# playerctl play-pause
+# 
+# super + i
+	# playerctl next
+# 
+# super + u
+	# playerctl previous
+# 
+# # make sxhkd reload its configuration files:
+# super + Escape
+#     pkill -USR1 -x sxhkd
 
 #
 # bspwm hotkeys

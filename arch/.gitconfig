@@ -14,6 +14,7 @@
 	tool = nvim -d
 [alias]
     st = status
+    c  = commit -v
     cm = commit -v
 	lg = log --graph --decorate --pretty=oneline --abbrev-commit 
     ls = log -1 HEAD

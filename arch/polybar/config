@@ -33,9 +33,9 @@ radius = 6.0
 fixed-center = false
 bottom = true
 
-modules-left = date bspwm xkeyboard
-modules-center = xwindow 
-modules-right = github eth1 eth2 wlan pulseaudio backlight memory cpu battery
+modules-left = date bspwm
+modules-center = xwindow
+modules-right = github wlan pulseaudio backlight memory cpu battery
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -169,17 +169,17 @@ format-disconnected-underline = #9f78e1
 label-connected = "%{A1:networkmanager_dmenu &:}  %downspeed% 祝 %upspeed%%{A}"
 label-disconnected = "Offline"
 
-[module/eth1]
-type = internal/network
-interface = enp0s31f6
-interval = 3.0
+; [module/eth1]
+; type = internal/network
+; interface = enp0s31f6
+; interval = 3.0
 
-format-connected-underline = #55aa55
-format-connected-prefix = "🖧 "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
+; format-connected-underline = #55aa55
+; format-connected-prefix = "🖧 "
+; format-connected-prefix-foreground = ${colors.foreground-alt}
+; label-connected = %local_ip%
 
-format-disconnected =
+; format-disconnected =
 
 [module/date]
 type = internal/date
@@ -265,94 +265,3 @@ ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
 ramp-volume-foreground = ${colors.foreground-alt}
-
-[module/mpd]
-type = internal/mpd
-
-; Host where mpd is running (either ip or domain name)
-; Can also be the full path to a unix socket where mpd is running.
-;;host = 127.0.0.1
-;;port = 6600
-;;password = mysecretpassword
-
-; Seconds to sleep between progressbar/song timer sync
-; Default: 1
-interval = 1
-
-; Available tags:
-;   <label-song> (default)
-;   <label-time>
-;   <bar-progress>
-;   <toggle> - gets replaced with <icon-(pause|play)>
-;   <toggle-stop> - gets replaced with <icon-(stop|play)>
-;   <icon-random>
-;   <icon-repeat>
-;   <icon-repeatone> (deprecated)
-;   <icon-single> - Toggle playing only a single song. Replaces <icon-repeatone>
-;   <icon-consume>
-;   <icon-prev>
-;   <icon-stop>
-;   <icon-play>
-;   <icon-pause>
-;   <icon-next>
-;   <icon-seekb>
-;   <icon-seekf>
-format-online = <label-song> <icon-prev> <toggle> <icon-next>
-format-online-prefix = ﱘ
-format-online-foreground = ${color.foreground}
-
-;format-playing = ${self.format-online}
-;format-paused = ${self.format-online}
-;format-stopped = ${self.format-online}
-
-; Available tags:
-;   <label-offline>
-format-offline = <label-offline>
-format-offline-prefix = ﱘ
-format-offline-foreground = ${color.foreground}
-
-; Available tokens:
-;   %artist%
-;   %album-artist%
-;   %album%
-;   %date%
-;   %title%
-; Default: %artist% - %title%
-label-song =  " %artist% - %title%"
-label-song-maxlen = 25
-label-song-ellipsis = true
-
-; Available tokens:
-;   %elapsed%
-;   %total%
-; Default: %elapsed% / %total%
-label-time = %elapsed% / %total%
-
-; Available tokens:
-;   None
-label-offline = " Offline"
-
-; Only applies if <icon-X> is used
-icon-play = 
-icon-pause = 
-icon-stop = 
-icon-prev = 
-icon-next = 
-icon-seekb = 
-icon-seekf = 
-icon-random = 
-icon-repeat = 
-icon-repeatone = 
-icon-single = 
-icon-consume = 
-
-; Used to display the state of random/repeat/repeatone/single
-; Only applies if <icon-[random|repeat|repeatone|single]> is used
-toggle-on-foreground = ${colors.primary}
-toggle-off-foreground = ${colors.alert}
-
-; Only applies if <bar-progress> is used
-;;bar-progress-width = 45
-;;bar-progress-indicator = |
-;;bar-progress-fill = ─
-;;bar-progress-empty = ─

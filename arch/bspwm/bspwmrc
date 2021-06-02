@@ -9,7 +9,8 @@ fcitx5 &
 if [ -x ~/.cargo/bin/keybase-chat-notifier ]; then
 	keybase chat api-listen | ~/.cargo/bin/keybase-chat-notifier &
 fi
-psensor &
+
+# psensor &
 
 bspc monitor -d I II III IV V VI VII VIII IX X
 
@@ -22,7 +23,7 @@ bspc config split_ratio          0.52
 bspc config borderless_monocle   false
 bspc config gapless_monocle      false
 
-bspc rule -a google-chrome-stable desktop='^1'
+bspc rule -a Chromium desktop='^1' follow=on
 # https://github.com/baskerville/bspwm/issues/291
 bspc rule -a ulauncher focus=on
 bspc rule -a sxiv state=floating center=true

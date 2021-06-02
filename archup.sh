@@ -159,7 +159,7 @@ pkgs() {
         dialog wpa_supplicant \
         os-prober mtools dosfstools \
         zsh sudo \
-        alsa-utils pulseaudio pulseaudio-alsa pavucontrol \
+        alsa-utils pulseaudio pulseaudio-alsa pavucontrol\
         light \
         aspell aspell-en hunspell hunspell-en_US \
         nodejs npm rustup go go-tools \
@@ -191,7 +191,6 @@ xpkgs() {
         ranger \
         sxiv \
         rofi \
-        mpd \
         xsane \
         xbindkeys \
         libnotify \
