@@ -12,7 +12,7 @@
 
 EDITOR=nvim
 BROWSER=google-chrome-stable
-NAME DEFAULT="Aaron Tanner"
+NAME DEFAULT="Aaron Taner"
 EMAIL=mapkts@gmail.com
 
 # Paths 
