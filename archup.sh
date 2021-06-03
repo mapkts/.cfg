@@ -346,6 +346,7 @@ rustup() {
     rustup toolchain install stable
 
     yay -Sy rust-analyzer-git
+    cargo install typos-cli
 }
 
 fonts() {
@@ -438,11 +439,21 @@ nobeep() {
     echo "reboot your computer to check if 'pcspkr' module has been disabled."
 }
 
-_ln_fl_fl() {
+_lns_ff() {
+    echo "$0" "$1" "$2"
     if [ ! -f "$2" ]; then
         echo "$2 is not a file" 1>&2
         exit 1
     fi
+
+    if [ -f "$1" ]; then
+        filename=$(basename "$1")
+        echo "found local config file "$1", backing up..."
+        install "$1" ~/.cfg/backups/$filename
+        rm "$1"
+    fi
+
+    ln -s "$2" "$1"
 }
 
 configs() {
@@ -618,6 +629,7 @@ case $cmd in
     21 |fcitx) fcitx ;;
     22 |winfonts) winfonts ;;
     23 |nobeep) nobeep ;;
+    24 |_lns_ff) _lns_ff "$@" ;;
     *)
         echo "error: unrecognized command" >&2
         exit 1
