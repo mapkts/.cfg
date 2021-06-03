@@ -24,7 +24,6 @@ bspc config borderless_monocle   false
 bspc config gapless_monocle      false
 
 bspc rule -a Chromium desktop='^1' follow=on
-# https://github.com/baskerville/bspwm/issues/291
 bspc rule -a ulauncher focus=on
 bspc rule -a sxiv state=floating center=true
 bspc rule -a polybar border=off manage=off
