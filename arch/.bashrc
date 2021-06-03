@@ -1,14 +1,10 @@
-#
-# ~/.bashrc
-#
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 PS1='[\u@\h \W]\$ '
 
-# Paths (current user only)
-export PATH=$PATH:$HOME/bin
+# Paths (only affect current user)
+export PATH=$PATH:$HOME/bin:$HOME/.local/bin
 
 # Proxy
 export http_proxy="socks5://127.0.0.1:1080"

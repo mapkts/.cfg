@@ -1,13 +1,13 @@
-! Modifier key remapping
-! We want to rewire caps lock and control keys
-clear      lock
-clear   control
-keycode      37 = Control_L
-! Caps -> Control_L
-keycode      66 = Control_L
-! Control_R stays
-keycode     105 = Multi_key
-! We apparently need to say that these are control keys?
-add     control = Control_L Control_R
-! AltGr is Mode_switch
-keycode     108 = Mode_switch
+! ! Modifier key remapping
+! ! We want to rewire caps lock and control keys
+! clear      lock
+! clear   control
+! keycode      37 = Control_L
+! ! Caps -> Control_L
+! keycode      66 = Control_L
+! ! Control_R stays
+! keycode     105 = Multi_key
+! ! We apparently need to say that these are control keys?
+! add     control = Control_L Control_R
+! ! AltGr is Mode_switch
+! keycode     108 = Mode_switch

@@ -439,21 +439,86 @@ nobeep() {
     echo "reboot your computer to check if 'pcspkr' module has been disabled."
 }
 
-_lns_ff() {
-    echo "$0" "$1" "$2"
-    if [ ! -f "$2" ]; then
-        echo "$2 is not a file" 1>&2
+# _lnsf /absolute/path/to/TARGET /absolute/path/to/SOURCE
+_lnsf() {
+    if [ ! -f "$1" ]; then
+        echo "error: $1 is not a file" 1>&2
         exit 1
     fi
 
-    if [ -f "$1" ]; then
-        filename=$(basename "$1")
-        echo "found local config file "$1", backing up..."
-        install "$1" ~/.cfg/backups/$filename
-        rm "$1"
+    if [ -f "$2" ]; then
+        filename=$(basename "$2")
+        echo "found local config file ("$2"), backing up..."
+        install "$2" ~/.cfg/backups/$filename
+        rm "$2"
     fi
 
-    ln -s "$2" "$1"
+    ln -sf "$1" "$2"
+}
+
+# _lndf /absolute/path/to/TARGET /absolute/path/to/SOURCE
+_lndf() {
+    if [ ! -f "$1" ]; then
+        echo "error: $1 is not a file" 1>&2
+        exit 1
+    fi
+
+    if [ -f "$2" ]; then
+        filename=$(basename "$2")
+        echo "found local config file ("$2"), backing up..."
+        install "$2" ~/.cfg/backups/$filename
+        rm "$2"
+    fi
+
+    ln -f "$1" "$2"
+}
+
+# _lnsd /absolute/path/to/TARGET /absolute/path/to/SOURCE
+_lnsd() {
+    mkdir -p "$2" || exit 1
+
+    if [ ! -d "$1" ]; then
+        echo "error: $1 is not a directory" 1>&2
+        exit 1
+    fi
+
+    isEmpty=0
+    ls "$2" 1>/dev/null || isEmpty=1
+
+    if [ $isEmpty -eq 0 ]; then
+        basedir=$(basename "$2")
+        echo "found local config files at "$2", backing up..."
+        if [ ! -d ~/.cfg/backups/"$basedir" ]; then
+            mkdir -p ~/.cfg/backups/"$basedir"
+        fi
+        install "$2"/* ~/.cfg/backups/"$basedir"
+    fi
+    
+    ln -sf "$1"/* "$2"
+}
+
+# _lnhd /absolute/path/to/TARGET /absolute/path/to/SOURCE
+_lnhd() {
+    mkdir -p "$2" || exit 1
+
+    if [ ! -d "$1" ]; then
+        echo "error: $1 is not a directory" 1>&2
+        exit 1
+    fi
+
+    isEmpty=0
+    ls "$2" 1>/dev/null || isEmpty=1
+
+    if [ $isEmpty -eq 0 ]; then
+        basedir=$(basename "$2")
+        echo "found local config files at "$2", backing up..."
+        if [ ! -d ~/.cfg/backups/"$basedir" ]; then
+            mkdir -p ~/.cfg/backups/"$basedir"
+        fi
+        install "$2"/* ~/.cfg/backups/"$basedir"
+    fi
+    
+    ln -f "$1"/* "$2"
 }
 
 configs() {
@@ -490,103 +555,26 @@ configs() {
         git clone https://github.com/mapkts/.cfg.git
     fi
 
-    if [ -f ~/archup.sh ]; then
-        echo "local archup.sh deteced, backing up.."
-        install ~/archup.sh ~/.cfg/backups/archup.sh
-    fi
-    ln -sf ~/.cfg/archup.sh ~/archup.sh
+    _lnsf ~/.cfg/archup.sh ~/archup.sh
+    _lnsf ~/.cfg/.vimrc ~/.vimrc
+    _lnsf ~/.cfg/arch/.pam_environment ~/.pam_environment
+    _lnsf ~/.cfg/arch/.xinitrc ~/.xinitrc
+    _lnsf ~/.cfg/arch/.xprofile ~/.xprofile
+    _lnsf ~/.cfg/arch/.Xmodmap ~/.Xmodmap
+    _lnsf ~/.cfg/arch/.Xresources ~/.Xresources
+    _lnsf ~/.cfg/arch/.bashrc ~/.bashrc
+    _lnsf ~/.cfg/arch/.gitconfig ~/.gitconfig
+    _lnsf ~/.cfg/arch/chromium-flags.conf ~/.config/chromium-flags.conf
+    _lnsf ~/.cfg/arch/chromium-flags.conf ~/.config/chrome-flags.conf
 
-    if [ -f ~/.gitconfig ]; then
-        echo "local .gitconfig deteced, backing up.."
-        install ~/.gitconfig ~/.cfg/backups/.gitconfig
-    fi
-    ln -sf ~/.cfg/arch/.gitconfig ~/.gitconfig
+    _lnsd ~/.cfg/arch/nvim ~/.config/nvim
+    _lnsd ~/.cfg/arch/alacritty ~/.config/alacritty
+    _lnsd ~/.cfg/arch/bspwm ~/.config/bspwm
+    _lnsd ~/.cfg/arch/sxhkd ~/.config/sxhkd
+    _lnsd ~/.cfg/arch/polybar ~/.config/polybar
 
-    if [ -f ~/.xinitrc ]; then
-        echo "local .xinitrc deteced, backing up.."
-        install ~/.xinitrc ~/.cfg/backups/.xinitrc
-    fi
-    ln -sf ~/.cfg/arch/.xinitrc ~/.xinitrc
-
-    if [ -f ~/.xprofile ]; then
-        echo "local .xprofile deteced, backing up.."
-        install ~/.xprofile ~/.cfg/backups/.xprofile
-    fi
-    ln -sf ~/.cfg/arch/.xprofile ~/.xprofile
-
-    if [ -f ~/.pam_environment ]; then
-        echo "local .pam_environment deteced, backing up.."
-        install ~/.pam_environment ~/.cfg/backups/.pam_environment
-    fi
-    ln -sf ~/.cfg/arch/.pam_environment ~/.pam_environment
-
-    if [ -f ~/.bashrc ]; then
-        echo "local .bashrc deteced, backing up.."
-        install ~/.bashrc ~/.cfg/backups/.bashrc
-    fi
-    ln -sf ~/.cfg/arch/.bashrc ~/.bashrc
-
-    if [ -f ~/.Xresources ]; then
-        echo "local .Xresources deteced, backing up.."
-        install ~/.Xresources ~/.cfg/backups/.Xresources
-    fi
-    ln -sf ~/.cfg/arch/.Xresources ~/.Xresources
-
-    if [ -f ~/.config/nvim/coc-settings.json ]; then
-        echo "local coc-settings.json deteced, backing up.."
-        mkdir -p ~/.cfg/backups/nvim
-        install ~/.config/nvim/coc-settings.json ~/.cfg/backups/nvim/coc-settings.json
-    fi
-    mkdir -p ~/.config/nvim
-    ln -sf ~/.cfg/arch/nvim/coc-settings.json ~/.config/nvim/coc-settings.json
-
-    if [ -f ~/.config/nvim/init.vim ]; then
-        echo "local nvim deteced, backing up.."
-        mkdir -p ~/.cfg/backups/nvim
-        install ~/.config/nvim/init.vim ~/.cfg/backups/nvim/init.vim
-    fi
-    mkdir -p ~/.config/nvim
-    ln -sf ~/.cfg/arch/nvim/init.vim ~/.config/nvim/init.vim
-
-    if [ -f ~/.config/alacritty/alacritty.yml ]; then
-        echo "local alacritty.yml deteced, backing up.."
-        mkdir -p ~/.cfg/backups/alacritty.yml
-        install ~/.config/alacritty/alacritty.yml ~/.cfg/backups/alacritty/alacritty.yml
-    fi
-    mkdir -p ~/.config/alacritty
-    ln -sf ~/.cfg/arch/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
-
-    if [ -f ~/.config/bspwm/bspwmrc ]; then
-        echo "local bspwm deteced, backing up.."
-        mkdir -p ~/.cfg/backups/bspwm
-        install ~/.config/bspwm/bspwmrc ~/.cfg/backups/bspwm/bspwmrc
-    fi
-    mkdir -p ~/.config/bspwm
-    ln -sf ~/.cfg/arch/bspwm/bspwmrc ~/.config/bspwm/bspwmrc
-
-    if [ -f ~/.config/sxhkd/sxhkdrc ]; then
-        echo "local sxhkd deteced, backing up.."
-        mkdir -p ~/.cfg/backups/sxhkd
-        install ~/.config/sxhkd/sxhkdrc ~/.cfg/backups/sxhkd/sxhkdrc
-    fi
-    mkdir -p ~/.config/sxhkd
-    ln -sf ~/.cfg/arch/sxhkd/sxhkdrc ~/.config/sxhkd/sxhkdrc
-
-    if [ -f ~/.config/polybar/config ]; then
-        echo "local polybar deteced, backing up.."
-        mkdir -p ~/.cfg/backups/polybar
-        install ~/.config/polybar/config ~/.cfg/backups/polybar/config
-    fi
-    mkdir -p ~/.config/polybar
-    ln -sf ~/.cfg/arch/polybar/config ~/.config/polybar/config
-
-    if [ -f ~/.config/polybar/launch.sh ]; then
-        echo "local polybar deteced, backing up.."
-        mkdir -p ~/.cfg/backups/polybar
-        install ~/.config/polybar/launch.sh ~/.cfg/backups/polybar/launch.sh
-    fi
-    mkdir -p ~/.config/polybar
-    ln -sf ~/.cfg/arch/polybar/launch.sh ~/.config/polybar/launch.sh
+    # ulauncher configs must be linked hard
+    _lnhd ~/.cfg/arch/ulauncher ~/.config/ulauncher
 }
 
 echo ""

@@ -48,5 +48,15 @@
         "is_default_search": false,
         "run_without_argument": false,
         "added": 1622382908.9845405
+    },
+    "f1809bc1-4ce4-4a9a-8ca9-cf8de44e8277": {
+        "id": "f1809bc1-4ce4-4a9a-8ca9-cf8de44e8277",
+        "name": "Google Search",
+        "keyword": "g",
+        "cmd": "https://google.com/search?q=%s",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": false,
+        "added": 1622704568.1512825
     }
 }
