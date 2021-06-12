@@ -9,9 +9,9 @@ fcitx5 &
 if [ -x ~/.cargo/bin/keybase-chat-notifier ]; then
 	keybase chat api-listen | ~/.cargo/bin/keybase-chat-notifier &
 fi
-
-# grep "grp:.*toggle" /usr/share/X11/xkb/rules/base.lst
-setxkbmap -option ctrl:nocaps
+if [ -x /usr/bin/dropbox ]; then
+    /usr/bin/dropbox &
+fi
 
 # psensor &
 
@@ -34,3 +34,7 @@ bspc rule -a polybar border=off manage=off
 bspc config remove_unplugged_monitors true
 bspc config remove_disabled_monitors true
 bspc config merge_overlapping_monitors true
+
+# grep "grp:.*toggle" /usr/share/X11/xkb/rules/base.lst
+sleep 2s && setxkbmap -option ctrl:nocaps
+

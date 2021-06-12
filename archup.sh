@@ -163,7 +163,7 @@ pkgs() {
         light \
         aspell aspell-en hunspell hunspell-en_US \
         nodejs npm rustup go go-tools \
-        python python2 python-pip python2-pip \
+        python python2 python-pip python2-pip python-gpgme \
         iputils inetutils whois bind-tools dhcpcd \
         xf86-input-libinput \
         cups \
@@ -238,6 +238,7 @@ yayxpkgs() {
         dzen2-xft-xpm-xinerama-git \
         google-chrome \
         obs-studio \
+        dropbox \
         mirage \
         idesk \
         gkrellm \
@@ -250,7 +251,8 @@ yayxpkgs() {
         ttf-fira-mono \
         ttf-mononoki-git \
         ttf-roboto \
-        ttf-ubuntu-font-family
+        ttf-ubuntu-font-family \
+        faenza-icon-theme
 }
 
 userinit() {
@@ -345,7 +347,7 @@ rustup() {
     rustup toolchain install nightly
     rustup toolchain install stable
 
-    yay -Sy rust-analyzer-git
+    CARGO_TARGET_DIR="" yay -Sy rust-analyzer-git
     cargo install typos-cli
 }
 
@@ -483,7 +485,7 @@ _lnsd() {
     fi
 
     isEmpty=0
-    ls "$2" 1>/dev/null || isEmpty=1
+    ls "$2"/* >/dev/null 2>&1 || isEmpty=1
 
     if [ $isEmpty -eq 0 ]; then
         basedir=$(basename "$2")
@@ -507,7 +509,7 @@ _lnhd() {
     fi
 
     isEmpty=0
-    ls "$2" 1>/dev/null || isEmpty=1
+    ls "$2"/* >/dev/null 2>&1 || isEmpty=1
 
     if [ $isEmpty -eq 0 ]; then
         basedir=$(basename "$2")
@@ -572,6 +574,7 @@ configs() {
     _lnsd ~/.cfg/arch/bspwm ~/.config/bspwm
     _lnsd ~/.cfg/arch/sxhkd ~/.config/sxhkd
     _lnsd ~/.cfg/arch/polybar ~/.config/polybar
+    _lnsd ~/.cfg/arch/dunst ~/.config/dunst
 
     # ulauncher configs must be linked hard
     _lnhd ~/.cfg/arch/ulauncher ~/.config/ulauncher

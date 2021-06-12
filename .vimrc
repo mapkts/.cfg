@@ -312,9 +312,6 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 xnoremap <leader>rb :s/^/
 xnoremap <leader>re :s/$/
 
-" Cargo doc
-nnoremap <leader>cd :!cargo doc --open<cr>
-
 " Shows stats
 nnoremap <leader>st g<c-g>
 
@@ -894,6 +891,12 @@ noremap <leader>g :<C-U><C-R>=printf("Leaderf! rg -e %s ", "")<CR>
 let g:sneak#label = 1
 
 """"""""""""""""""""""""""""""
+" => Vim-Commentary
+""""""""""""""""""""""""""""""
+nmap <leader>c <Plug>CommentaryLine
+xmap <leader>c <Plug>Commentary
+
+""""""""""""""""""""""""""""""
 " => Vim-Enwise
 """"""""""""""""""""""""""""""
 let g:enwise_enable_globally = 1
@@ -932,6 +935,7 @@ nnoremap <F11> :let g:neovide_fullscreen = ( neovide_fullscreen == v:false ? v:t
 " => netrw 
 """"""""""""""""""""""""""""""
 let g:netrw_fastbrowse = 0
+autocmd FileType netrw setl bufhidden=wipe
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Abbreviations and auto-corrections

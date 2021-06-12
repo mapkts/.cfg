@@ -37,7 +37,7 @@ CARGO_TARGET_DIR DEFAULT=@{HOME}/.cargo-target
 PATH DEFAULT=${PATH}:@{HOME}/.cargo-target/release/
 CARGO_INCREMENTAL=1
 RUSTFLAGS DEFAULT="-C target-cpu=native"
-RUST_BACKTRACE=1
+# RUST_BACKTRACE=1
 
 # Handy for debugging
 WINEDEBUG=fixme-all
