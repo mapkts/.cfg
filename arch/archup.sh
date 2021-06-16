@@ -370,8 +370,8 @@ mountwinfs() {
             echo "" | sudo tee -a /etc/fstab 1>/dev/null
             echo "# /dev/nvme0n1p3 & /dev/nvme0n1p4 (Windows partitions)" | sudo tee -a /etc/fstab 1>/dev/null
             echo "# See https://wiki.archlinux.org/title/NTFS-3G for details." | sudo tee -a /etc/fstab 1>/dev/null
-            echo "/dev/nvme0n1p3  /mnt/c  ntfs-3g uid=mapkts,gid=wheel,dmask=022,fmask=133 0 0" | sudo tee -a /etc/fstab 1>/dev/null
-            echo "/dev/nvme0n1p4  /mnt/d  ntfs-3g uid=mapkts,gid=wheel,dmask=022,fmask=133 0 0" | sudo tee -a /etc/fstab 1>/dev/null
+            echo "/dev/nvme0n1p3  /mnt/c  ntfs-3g uid=mapkts,gid=wheel,dmask=022,fmask=022 0 0" | sudo tee -a /etc/fstab 1>/dev/null
+            echo "/dev/nvme0n1p4  /mnt/d  ntfs-3g uid=mapkts,gid=wheel,dmask=022,fmask=022 0 0" | sudo tee -a /etc/fstab 1>/dev/null
             echo "windows partitions is successfully mounted."
             ;;
         n)
@@ -557,8 +557,8 @@ configs() {
         git clone https://github.com/mapkts/.cfg.git
     fi
 
-    _lnsf ~/.cfg/archup.sh ~/archup.sh
     _lnsf ~/.cfg/.vimrc ~/.vimrc
+    _lnsf ~/.cfg/arch/archup.sh ~/archup.sh
     _lnsf ~/.cfg/arch/.pam_environment ~/.pam_environment
     _lnsf ~/.cfg/arch/.xinitrc ~/.xinitrc
     _lnsf ~/.cfg/arch/.xprofile ~/.xprofile
@@ -575,6 +575,7 @@ configs() {
     _lnsd ~/.cfg/arch/sxhkd ~/.config/sxhkd
     _lnsd ~/.cfg/arch/polybar ~/.config/polybar
     _lnsd ~/.cfg/arch/dunst ~/.config/dunst
+    _lnsd ~/.cfg/arch/rustfmt ~/.config/rustfmt
 
     # ulauncher configs must be linked hard
     _lnhd ~/.cfg/arch/ulauncher ~/.config/ulauncher

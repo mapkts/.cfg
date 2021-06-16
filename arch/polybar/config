@@ -35,7 +35,7 @@ bottom = true
 
 modules-left = date bspwm
 modules-center = xwindow
-modules-right = github wlan pulseaudio backlight memory cpu battery
+modules-right = wlan pulseaudio backlight memory cpu battery
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -167,7 +167,8 @@ format-disconnected-prefix-foreground = ${colors.foreground-alt}
 format-disconnected-underline = #9f78e1
 ; label-connected = "%{A1:networkmanager_dmenu &:} %essid%  %downspeed% 祝 %upspeed%%{A}"
 label-connected = "%{A1:networkmanager_dmenu &:}  %downspeed% 祝 %upspeed%%{A}"
-label-disconnected = "Offline"
+label-disconnected = ""
+; label-disconnected = "Offline"
 
 ; [module/eth1]
 ; type = internal/network

@@ -249,6 +249,7 @@ if has('win32')
     nnoremap <leader>ec :e d:\dev\code\
 elseif has('unix')
     nnoremap <leader>ev :e ~/.vimrc<cr>
+    nnoremap <leader>es :e ~/Dropbox/Dev/Vim/vimfiles/ultisnips/
 endif
 
 " Redo last command
@@ -285,12 +286,14 @@ snoremap <leader>gw <Esc>b[sviw<C-G>
 inoremap <c-u> <esc>gUiwea
 
 " Moving current line or selected text up and down
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+if has("win32")
+    nnoremap <A-j> :m .+1<CR>==
+    nnoremap <A-k> :m .-2<CR>==
+    inoremap <A-j> <Esc>:m .+1<CR>==gi
+    inoremap <A-k> <Esc>:m .-2<CR>==gi
+    vnoremap <A-j> :m '>+1<CR>gv=gv
+    vnoremap <A-k> :m '<-2<CR>gv=gv
+endif
 
 " Moving current line or selected text to the beginning/ending of current file
 nnoremap <A-J> VxGp==<c-o>
@@ -336,22 +339,6 @@ function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
-
-" Toggle quickfix window
-" nnoremap <leader>q :call QuickfixToggle()<cr>
-
-" let g:quickfix_is_open = 0
-" function! QuickfixToggle()
-"     if g:quickfix_is_open
-"         cclose
-"         let g:quickfix_is_open = 0
-"         execute g:quickfix_return_to_window . "wincmd w"
-"     else
-"         let g:quickfix_return_to_window = winnr()
-"         copen
-"         let g:quickfix_is_open = 1
-"     endif
-" endfunction
 
 " Resize buffer (vertical)
 nnoremap <leader>rs :vertical resize 
@@ -957,4 +944,5 @@ iab fucntion function
 iab uszie usize
 iab iszie isize
 iab sturct struct
+iab strcut struct
 iab pritln println
