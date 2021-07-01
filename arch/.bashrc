@@ -12,9 +12,10 @@ export https_proxy="socks5://127.0.0.1:1080"
 
 # Aliases
 alias vi="nvim"
-alias ls='ls -l --color=auto'
-alias la='ls -l -a'
+alias ls='ls -lh --color=auto'
+alias la='ls -lh -a'
 alias sys="systemctl"
+alias rcheck="cargo check && cargo clippy && cargo fmt --all && cargo test"
 
 # Colorize tshark output (24-bit color terminal only)
 alias tsharkc='tshark --color'

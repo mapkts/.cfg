@@ -158,7 +158,7 @@ pkgs() {
         networkmanager network-manager-applet \
         dialog wpa_supplicant \
         os-prober mtools dosfstools \
-        zsh sudo \
+        zsh fish sudo \
         alsa-utils pulseaudio pulseaudio-alsa pavucontrol\
         light \
         aspell aspell-en hunspell hunspell-en_US \

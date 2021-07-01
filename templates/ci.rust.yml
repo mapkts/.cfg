@@ -1,0 +1,7 @@
+name: CI
+
+env: 
+  MIN_SUPPORTED_VERSION: "1.45.0"
+
+on:
+
