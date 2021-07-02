@@ -566,6 +566,7 @@ configs() {
     _lnsf ~/.cfg/arch/.Xresources ~/.Xresources
     _lnsf ~/.cfg/arch/.bashrc ~/.bashrc
     _lnsf ~/.cfg/arch/.gitconfig ~/.gitconfig
+    _lnsf ~/.cfg/arch/fish/config.fish ~/.config/fish/config.fish
     _lnsf ~/.cfg/arch/chromium-flags.conf ~/.config/chromium-flags.conf
     _lnsf ~/.cfg/arch/chromium-flags.conf ~/.config/chrome-flags.conf
 
