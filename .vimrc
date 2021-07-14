@@ -62,8 +62,9 @@ if has("nvim") && has("win32")
     let g:python3_host_prog = 'C:\Users\mapkts\AppData\Local\Programs\Python\Python39\python.exe'
     let g:node_host_prog = 'C:\Users\mapkts\AppData\Roaming\npm\node_modules\neovim\bin\cli.js'
 elseif has("nvim") && has("unix")
-    set shell=/bin/bash
+    set shell=/usr/bin/fish
 
+    " Set up provider paths
     let g:python_host_prog = '/usr/bin/python2'
     let g:python3_host_prog = '/usr/bin/python3'
     let g:node_host_prog = '/usr/bin/node'
@@ -178,7 +179,7 @@ if has('nvim') && has('win32')
 elseif has('win32')
     nnoremap <expr> <space> BufNr("sh.exe") > 0 ? (&buftype == 'terminal' ? '<c-^>' : ':b '. BufNr("sh.exe") . '<cr>') : ':terminal ++curwincr>'
 elseif has('unix')
-    nnoremap <expr> <space> BufNr("/bin/bash") > 0 ? (&buftype == 'terminal' ? '<c-^>' : ':b '. BufNr("/bin/bash") . '<cr>') : ':terminal<cr>'
+    nnoremap <expr> <space> BufNr("/usr/bin/fish") > 0 ? (&buftype == 'terminal' ? '<c-^>' : ':b '. BufNr("/usr/bin/fish") . '<cr>') : ':terminal<cr>'
 endif
 
 " BufNr definition
@@ -870,7 +871,7 @@ let g:Lf_ShortcutF = "<leader>f"
 noremap <C-B> :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
 noremap <leader>g :<C-U><C-R>=printf("Leaderf! rg -e %s ", "")<CR>
 " search visually selected text literally
-"xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
+" xnoremap gf :<C-U><C-R>=printf("Leaderf! rg -F -e %s ", leaderf#Rg#visual())<CR>
 
 """"""""""""""""""""""""""""""
 " => Vim-Sneak
@@ -897,26 +898,6 @@ let g:enwise_close_multiline = 1
 " let g:go_info_mode='gopls'
 
 " autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
-
-
-""""""""""""""""""""""""""""""
-" => Neovide (Nvim GUI)
-""""""""""""""""""""""""""""""
-let g:neovide_transparency=1.0
-
-" Animations
-let g:neovide_cursor_animation_length=0.06
-let g:neovide_cursor_trail_length=0.8
-
-" Particles
-let g:neovide_cursor_vfx_mode = ""      " pixiedust / torpedo / railgun
-let g:neovide_cursor_vfx_opacity=200.0         " default: 200.0
-let g:neovide_cursor_vfx_particle_lifetime=1.2 " default: 1.2
-let g:neovide_cursor_vfx_particle_density=7.0  " default: 7.0
-let g:neovide_cursor_vfx_particle_speed=10.0   " default: 10.0
-
-" key mappings
-nnoremap <F11> :let g:neovide_fullscreen = ( neovide_fullscreen == v:false ? v:true : v:false )<CR><CR>
 
 """"""""""""""""""""""""""""""
 " => netrw 

@@ -349,6 +349,8 @@ rustup() {
 
     CARGO_TARGET_DIR="" yay -Sy rust-analyzer-git
     cargo install typos-cli
+    cargo install cargo-asm
+    cargo install cargo-expand
 }
 
 fonts() {
