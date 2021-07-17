@@ -48,7 +48,6 @@ set timeoutlen=300               " http://stackoverflow.com/questions/2158516/de
 set signcolumn=yes               " Always draw sign column. Prevent buffer moving when adding/deleting sign.
 set undofile                     " Permanent undo
 set undodir=~/.undodir
-set foldmethod=manual            " Fold manually
 set updatetime=100               " Reducing update time
 set termguicolors                " Enable 24-bit RGB true color
 set background=dark              " Set background color to dark
@@ -908,22 +907,28 @@ autocmd FileType netrw setl bufhidden=wipe
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Abbreviations and auto-corrections
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Common typos
-iab waht what
-iab taht that
-iab lenght length
-iab retrun return
-iab chidren children
-iab widht width
+" auto corrections {{{
+augroup auto_corrections
+    autocmd!
 
-" JavaScript
-iab fuction function
-iab funciton function
-iab fucntion function
+    " Common typos
+    iab waht what
+    iab taht that
+    iab lenght length
+    iab retrun return
+    iab chidren children
+    iab widht width
 
-" Rust
-iab uszie usize
-iab iszie isize
-iab sturct struct
-iab strcut struct
-iab pritln println
+    " JavaScript
+    iab fuction function
+    iab funciton function
+    iab fucntion function
+
+    " Rust
+    iab uszie usize
+    iab iszie isize
+    iab sturct struct
+    iab strcut struct
+    iab pritln println
+augroup END
+" }}}
