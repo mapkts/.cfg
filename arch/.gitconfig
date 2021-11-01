@@ -1,5 +1,5 @@
 [user]
-	name = Aaron Taner
+	name = mapkts
 	email = mapkts@gmail.com
 [core]
 	editor = nvim
@@ -8,8 +8,6 @@
 	proxy = socks5://127.0.0.1:1080
 [http]
 	proxy = socks5://127.0.0.1:1080
-[credential]
-	helper = store
 [merge]
 	tool = nvim -d
 [alias]
@@ -25,3 +23,5 @@
     sl = stash list
 [pull]
 	rebase = true
+[credential]
+	helper = cache

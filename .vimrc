@@ -379,6 +379,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'dhruvasagar/vim-table-mode'
 
 " Language supports
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
@@ -785,9 +786,10 @@ augroup merge_imports
 augroup END
 
 function! FormatWrite()
-    if &filetype ==# 'rust'
-        execute ':RustFmt'
-    endif
+    " if &filetype ==# 'rust'
+    "     execute ':RustFmt'
+    " endif
+    execute ':RustFmt'
     execute ':w!'
 endfunction
 
@@ -903,6 +905,23 @@ let g:enwise_close_multiline = 1
 """"""""""""""""""""""""""""""
 let g:netrw_fastbrowse = 0
 autocmd FileType netrw setl bufhidden=wipe
+
+""""""""""""""""""""""""""""""
+" => Vim Table Mode 
+""""""""""""""""""""""""""""""
+function! s:isAtStartOfLine(mapping)
+  let text_before_cursor = getline('.')[0 : col('.')-1]
+  let mapping_pattern = '\V' . escape(a:mapping, '\')
+  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
+  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
+endfunction
+
+inoreabbrev <expr> <bar><bar>
+          \ <SID>isAtStartOfLine('\|\|') ?
+          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
+inoreabbrev <expr> __
+          \ <SID>isAtStartOfLine('__') ?
+          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Abbreviations and auto-corrections
