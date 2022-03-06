@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+
 # Download BBC news audio from putclub.com
 #
 # 1. Download today's news.
@@ -8,7 +9,7 @@ set -e
 # 2. Download news for a given day.
 # ./bbcnews 20210408
 # 
-# 3. Download news within a inclusive date range.
+# 3. Download news within an inclusive date range.
 # ./bbcnews 20210408 20210508
 
 OUTPUT_DIRECTORY="$HOME/devel/news/audio"

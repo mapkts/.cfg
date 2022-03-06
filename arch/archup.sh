@@ -39,7 +39,7 @@ boostrap() {
     pacstrap "$INSTALL_DIR" base base-devel linux linux-firmware vim
     genfstab -U "$INSTALL_DIR" >> "$INSTALL_DIR"/etc/fstab
 
-    echo "Boostrap succeeded, run: arch-chroot $INSTALL_DIR"
+    echo "Bootstrap succeeded, run: arch-chroot $INSTALL_DIR"
 }
 
 makeswap() {

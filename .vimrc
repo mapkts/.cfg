@@ -363,6 +363,7 @@ endif
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
+
 " Essentials
 Plug 'sirver/ultisnips'
 Plug 'ervandew/supertab'
@@ -380,10 +381,10 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'dhruvasagar/vim-table-mode'
+Plug 'preservim/tagbar'
 
 " Language supports
 Plug 'rust-lang/rust.vim', { 'for': ['rust'] }
-"Plug 'racer-rust/racer', { 'for': ['rust'] }
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'typescript'] }
 Plug 'marijnh/tern_for_vim', { 'for': ['javascript', 'typescript'], 'do': 'npm install' }
 Plug 'leafgarland/typescript-vim', { 'for': ['javascript', 'typescript'] }
@@ -786,10 +787,9 @@ augroup merge_imports
 augroup END
 
 function! FormatWrite()
-    " if &filetype ==# 'rust'
-    "     execute ':RustFmt'
-    " endif
-    execute ':RustFmt'
+    if &filetype ==# 'rust'
+        execute ':RustFmt'
+    endif
     execute ':w!'
 endfunction
 
@@ -798,6 +798,11 @@ function! MergeImports()
     execute ':RustFmt'
     let g:rustfmt_options = '--unstable-features'
 endfunction
+
+""""""""""""""""""""""""""""""
+" => Golang
+""""""""""""""""""""""""""""""
+autocmd BufWritePre *.go :silent call CocAction('runCommand', 'editor.action.organizeImport')
 
 """"""""""""""""""""""""""""""
 " => UltiSnips
@@ -892,19 +897,43 @@ let g:enwise_enable_globally = 1
 let g:enwise_close_multiline = 1
 
 """"""""""""""""""""""""""""""
-" => Go
-""""""""""""""""""""""""""""""
-" vim-go
-" let g:go_def_mode='gopls'
-" let g:go_info_mode='gopls'
-
-" autocmd BufWritePre *.go :call CocAction('runCommand', 'editor.action.organizeImport')
-
-""""""""""""""""""""""""""""""
 " => netrw 
 """"""""""""""""""""""""""""""
 let g:netrw_fastbrowse = 0
 autocmd FileType netrw setl bufhidden=wipe
+
+""""""""""""""""""""""""""""""
+" => Tagbar 
+""""""""""""""""""""""""""""""
+nmap <leader>tb :TagbarToggle<CR>
+
+let g:tagbar_type_go = {
+	\ 'ctagstype' : 'go',
+	\ 'kinds'     : [
+		\ 'p:package',
+		\ 'i:imports:1',
+		\ 'c:constants',
+		\ 'v:variables',
+		\ 't:types',
+		\ 'n:interfaces',
+		\ 'w:fields',
+		\ 'e:embedded',
+		\ 'm:methods',
+		\ 'r:constructor',
+		\ 'f:functions'
+	\ ],
+	\ 'sro' : '.',
+	\ 'kind2scope' : {
+		\ 't' : 'ctype',
+		\ 'n' : 'ntype'
+	\ },
+	\ 'scope2kind' : {
+		\ 'ctype' : 't',
+		\ 'ntype' : 'n'
+	\ },
+	\ 'ctagsbin'  : 'gotags',
+	\ 'ctagsargs' : '-sort -silent'
+\ }
 
 """"""""""""""""""""""""""""""
 " => Vim Table Mode 

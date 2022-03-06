@@ -17,9 +17,14 @@ EMAIL=mapkts@gmail.com
 
 # Paths 
 PATH DEFAULT=${PATH}:@{HOME}/bin
-PATH DEFAULT=${PATH}:@{HOME}/.cargo/bin
-PATH DEFAULT=${PATH}:@{HOME}/.npm-global/bin
 PATH DEFAULT=${PATH}:@{HOME}/.local/bin
+PATH DEFAULT=${PATH}:@{HOME}/.cargo/bin
+PATH DEFAULT=${PATH}:@{HOME}/go/bin
+PATH DEFAULT=${PATH}:@{HOME}/.npm-global/bin
+
+# Proxies
+http_proxy=http://127.0.0.1:1081
+https_proxy=http://127.0.0.1:1081
 
 # Chinese input method
 # See https://wiki.archlinux.org/title/Fcitx5 for details.
@@ -41,6 +46,8 @@ RUSTFLAGS DEFAULT="-C target-cpu=native"
 
 # Handy for debugging
 WINEDEBUG=fixme-all
+
+_JAVA_AWT_WM_NONREPARENTING=1
 
 # make less better
 # X = leave content on-screen

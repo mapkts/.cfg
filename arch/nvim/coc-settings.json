@@ -15,7 +15,7 @@
     },
     "golang": {
       "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "rootPatterns": ["go.work", "go.mod", ".vim/", ".git/", ".hg/"],
       "filetypes": ["go"],
       "initializationOptions": {
         "usePlaceholders": true
@@ -23,5 +23,6 @@
     }
   },
   "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.server.path": "/usr/bin/rust-analyzer"
+  "rust-analyzer.server.path": "/usr/bin/rust-analyzer",
+  "rust-analyzer.diagnostics.disabled": ["inactive-code"]
 }
