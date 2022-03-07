@@ -114,7 +114,7 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
 
 " Show notification if file changed on disk
 autocmd FileChangedShellPost *
-  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+        \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 
 " Show those damn hidden caracters
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
@@ -558,7 +558,7 @@ command! -nargs=0 -range SortAlphabet :'<,'>!LC_ALL=C sort
 """"""""""""""""""""""""""""""
 " => Vim-rooter
 """"""""""""""""""""""""""""""
-let g:rooter_patterns = ['.git', 'Cargo.toml']
+let g:rooter_patterns = ['.git', 'Cargo.toml', 'go.mod']
 let g:rooter_silent_chdir = 1
 let g:rooter_change_directory_for_non_project_files = 'current'
 
@@ -901,39 +901,6 @@ let g:enwise_close_multiline = 1
 """"""""""""""""""""""""""""""
 let g:netrw_fastbrowse = 0
 autocmd FileType netrw setl bufhidden=wipe
-
-""""""""""""""""""""""""""""""
-" => Tagbar 
-""""""""""""""""""""""""""""""
-nmap <leader>tb :TagbarToggle<CR>
-
-let g:tagbar_type_go = {
-	\ 'ctagstype' : 'go',
-	\ 'kinds'     : [
-		\ 'p:package',
-		\ 'i:imports:1',
-		\ 'c:constants',
-		\ 'v:variables',
-		\ 't:types',
-		\ 'n:interfaces',
-		\ 'w:fields',
-		\ 'e:embedded',
-		\ 'm:methods',
-		\ 'r:constructor',
-		\ 'f:functions'
-	\ ],
-	\ 'sro' : '.',
-	\ 'kind2scope' : {
-		\ 't' : 'ctype',
-		\ 'n' : 'ntype'
-	\ },
-	\ 'scope2kind' : {
-		\ 'ctype' : 't',
-		\ 'ntype' : 'n'
-	\ },
-	\ 'ctagsbin'  : 'gotags',
-	\ 'ctagsargs' : '-sort -silent'
-\ }
 
 """"""""""""""""""""""""""""""
 " => Vim Table Mode 
