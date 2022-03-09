@@ -16,6 +16,9 @@ alias vi 'nvim'
 alias ls 'ls -lh --color=auto'
 alias la 'ls -lh -a'
 
+alias proxy "git config --global http.proxy http://127.0.0.1:1081"
+alias unproxy "git config --global --unset http.proxy"
+
 alias idea '/home/mapkts/idea/bin/idea.sh'
 alias tshark 'tshark --color'
 

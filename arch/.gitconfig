@@ -5,9 +5,10 @@
 	editor = nvim
 	autocrlf = false
 [https]
-	proxy = socks5://127.0.0.1:1080
+	proxy = http://127.0.0.1:1081
 [http]
-	proxy = socks5://127.0.0.1:1080
+	proxy = http://127.0.0.1:1081
+	sslverify = false
 [merge]
 	tool = nvim -d
 [alias]
