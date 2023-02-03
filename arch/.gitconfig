@@ -7,7 +7,6 @@
 [https]
 	proxy = http://127.0.0.1:1081
 [http]
-	proxy = http://127.0.0.1:1081
 	sslverify = false
 [merge]
 	tool = nvim -d

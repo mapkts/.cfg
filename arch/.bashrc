@@ -13,7 +13,8 @@ export PATH=$PATH:$HOME/bin:$HOME/.local/bin
 # Aliases
 alias vi='nvim'
 alias ls='ls -lh --color=auto'
-alias la='ls -lh -a'
+alias la='ls -lh -A'
+alias lh='ls -ld .*'
 alias sys='systemctl'
 alias rcheck='cargo check && cargo clippy -- -D warnings && cargo fmt --all && cargo test'
 alias rdoc='RUSTDOCFLAGS="--cfg docsrs" cargo +nightly doc --all-features'
